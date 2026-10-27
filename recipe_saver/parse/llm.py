@@ -11,7 +11,7 @@ import re
 import httpx
 
 from recipe_saver.models import Ingredient, Recipe
-from recipe_saver.parse.ingredients import UNIT_ALIASES
+from recipe_saver.parse.ingredients import UNIT_ALIASES, parse_ingredient_line
 from recipe_saver.parse.text import clean
 
 DEFAULT_BASE_URL = "http://localhost:11434/v1"
@@ -109,15 +109,8 @@ class LLMClient:
             item = (ing.get("item") or "").strip()
             if not item or not _mentioned(item, caption_lower):
                 continue
-            unit = (ing.get("unit") or "").lower().rstrip(".") or None
-            ingredients.append(Ingredient(
-                raw_text=(ing.get("raw_text") or item).strip(),
-                item=item,
-                quantity=ing.get("quantity"),
-                quantity_max=ing.get("quantity_max"),
-                unit=UNIT_ALIASES.get(unit, unit),
-                note=ing.get("note") or None,
-            ))
+            ingredients.append(_check_against_raw(ing, item))
+        ingredients = _recover_skipped(clean(caption), ingredients)
         return Recipe(
             title=(data.get("title") or "").strip(),
             ingredients=ingredients,
@@ -125,6 +118,47 @@ class LLMClient:
             servings=data.get("servings"),
             parse_method="llm",
         )
+
+
+def _check_against_raw(ing: dict, item: str) -> Ingredient:
+    """Small models copy raw_text faithfully but often drop the quantity ("2 eggs" ->
+    quantity null, item "egg") or invent units ("juiced lime"). Re-parse raw_text with
+    the rule parser and trust it for the numbers."""
+    raw = (ing.get("raw_text") or item).strip()
+    ruled = parse_ingredient_line(raw)
+    quantity = ing.get("quantity")
+    quantity_max = ing.get("quantity_max")
+    if quantity is None or (ruled.quantity is not None and ruled.quantity != quantity):
+        quantity, quantity_max = ruled.quantity, ruled.quantity_max
+    unit = (ing.get("unit") or "").lower().rstrip(".") or None
+    unit = UNIT_ALIASES.get(unit) or ruled.unit
+    # Widen a clipped item back to whole words as written: "egg" in "2 eggs" -> "eggs".
+    whole = re.search(rf"\w*{re.escape(item)}\w*", raw, re.IGNORECASE)
+    return Ingredient(
+        raw_text=raw,
+        item=whole[0] if whole else item,
+        quantity=quantity,
+        quantity_max=quantity_max,
+        unit=unit,
+        note=ing.get("note") or None,
+    )
+
+
+def _recover_skipped(text: str, ingredients: list[Ingredient]) -> list[Ingredient]:
+    """Text left between two ingredients the model found is an ingredient it skipped
+    ("40g Light Grated Cheese Diced Chives" -> only the cheese came back)."""
+    lower = text.lower()
+    result, prev_end, pos = [], None, 0
+    for ing in ingredients:
+        start = lower.find(ing.raw_text.lower(), pos)
+        if start != -1:
+            if prev_end is not None:
+                gap = re.sub(r"\([^)]*\)", " ", text[prev_end:start]).strip(" -*•,:;|")
+                if re.search(r"[a-z]{3,}", gap, re.IGNORECASE) and len(gap.split()) <= 5:
+                    result.append(parse_ingredient_line(gap))
+            prev_end = pos = start + len(ing.raw_text)
+        result.append(ing)
+    return result
 
 
 def _mentioned(item: str, caption_lower: str) -> bool:
