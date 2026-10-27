@@ -1,0 +1,57 @@
+{
+  "url": "https://www.tiktok.com/@zachs.foods/video/7584868649622637855?_r=1&_t=ZS-9Atx81LG2ej",
+  "author": "zachs.foods",
+  "caption": "Creamy Tomato Basil Pasta! 🍅🪴 #pasta #weeknightmeals #quickdinner #easydinner #easyrecipe   6-8oz pasta (start cooking before sauce) 2 tbsp olive oil 2 garlic cloves 1-2 handfuls fresh basil 2 tbsp tomato paste 1/2 tsp red pepper flakes 1/4 cup heavy cream 1 tbsp butter (optional)",
+  "expected": {
+    "has_recipe": true,
+    "steps": 0,
+    "ingredients": [
+      [
+        [
+          6,
+          8
+        ],
+        "oz",
+        "pasta"
+      ],
+      [
+        2,
+        "tbsp",
+        "olive oil"
+      ],
+      [
+        2,
+        "*",
+        "garlic"
+      ],
+      [
+        [
+          1,
+          2
+        ],
+        "handful",
+        "basil"
+      ],
+      [
+        2,
+        "tbsp",
+        "tomato paste"
+      ],
+      [
+        0.5,
+        "tsp",
+        "red pepper flakes"
+      ],
+      [
+        0.25,
+        "cup",
+        "heavy cream"
+      ],
+      [
+        1,
+        "tbsp",
+        "butter"
+      ]
+    ]
+  }
+}

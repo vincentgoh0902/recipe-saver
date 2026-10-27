@@ -1,0 +1,79 @@
+{
+  "url": "https://www.tiktok.com/@shezcooks/video/7637429806275267863?_r=1&_t=ZS-9Atwwghm9Ia",
+  "author": "shezcooks",
+  "caption": "creamy garlic pasta with steak 🔥 ingredients: - 1 ribeye steak @Ayah Halal® 🥩 - steak seasoning for both sides  - 20g butter 🧈  - 2 cloves garlic 🧄  - 300-400g pasta  - 1 small onion 🧅  - 5 cloves garlic 🧄 ( crushed ) - 1tsp red chilli flakes 🌶️ - salt & pepper🧂  - 400ml double cream / heavy whipping cream  - 1tsp oregano / Italian herbs 🌿  - 2tsp paprika - cheddar cheese 🧀  #pasta #steak #easyrecipe #dinnerideas #cooking ",
+  "expected": {
+    "has_recipe": true,
+    "steps": 0,
+    "ingredients": [
+      [
+        1,
+        null,
+        "ribeye steak"
+      ],
+      [
+        null,
+        "*",
+        "steak seasoning"
+      ],
+      [
+        20,
+        "g",
+        "butter"
+      ],
+      [
+        2,
+        "clove",
+        "garlic"
+      ],
+      [
+        [
+          300,
+          400
+        ],
+        "g",
+        "pasta"
+      ],
+      [
+        1,
+        null,
+        "onion"
+      ],
+      [
+        5,
+        "clove",
+        "garlic"
+      ],
+      [
+        1,
+        "tsp",
+        "chilli flakes"
+      ],
+      [
+        null,
+        "*",
+        "salt"
+      ],
+      [
+        400,
+        "ml",
+        "cream"
+      ],
+      [
+        1,
+        "tsp",
+        "oregano"
+      ],
+      [
+        2,
+        "tsp",
+        "paprika"
+      ],
+      [
+        null,
+        "*",
+        "cheddar"
+      ]
+    ]
+  }
+}

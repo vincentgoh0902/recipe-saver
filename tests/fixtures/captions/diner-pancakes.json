@@ -1,0 +1,56 @@
+{
+  "url": "https://www.tiktok.com/@cameroncookedthis/video/7431609541676043551?_r=1&_t=ZS-9AtwtkXHmaK",
+  "author": "cameroncookedthis",
+  "caption": "Why Diner Pancakes Are Better. Ingredients 200g flour 7g baking powder 3g baking soda 2g salt 30g white sugar 2 eggs (whites and yolks separated)  350ml buttermilk 30g melted salted butter vanilla extract",
+  "expected": {
+    "has_recipe": true,
+    "steps": 0,
+    "ingredients": [
+      [
+        200,
+        "g",
+        "flour"
+      ],
+      [
+        7,
+        "g",
+        "baking powder"
+      ],
+      [
+        3,
+        "g",
+        "baking soda"
+      ],
+      [
+        2,
+        "g",
+        "salt"
+      ],
+      [
+        30,
+        "g",
+        "white sugar"
+      ],
+      [
+        2,
+        null,
+        "eggs"
+      ],
+      [
+        350,
+        "ml",
+        "buttermilk"
+      ],
+      [
+        30,
+        "g",
+        "butter"
+      ],
+      [
+        null,
+        "*",
+        "vanilla extract"
+      ]
+    ]
+  }
+}

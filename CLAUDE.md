@@ -30,5 +30,16 @@ whisper.cpp, local LLM for parse fallback (JSON-constrained).
 
 ## Layout
 
+- `recipe_saver/parse/` caption parser: `rules.py` first; `llm.py` fallback when the rules
+  don't trust their result (run-on unbulleted lists) or the title is weak.
+  The LLM is any OpenAI-compatible server (`LLM_BASE_URL`, `LLM_MODEL`), so the server
+  can run Ollama or llama.cpp's `llama-server`.
+- `tests/fixtures/captions/` the 10 sample captions with hand-written expected results.
 - `spike/` milestone throwaway scripts (`uv run spike/fetch.py URL`)
-- `data/` gitignored; `data/samples/` holds fetched captions for parser tests
+- `data/` gitignored; `data/samples/` holds raw fetched captions.
+
+## Commands
+
+- `uv run pytest` (LLM tests skip when no LLM is reachable)
+- `uv run scripts/eval_parser.py [--no-llm] [-v]` scores the parser on the fixtures
+- Local LLM: `brew install ollama && brew services start ollama && ollama pull qwen2.5:3b`

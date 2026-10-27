@@ -1,0 +1,11 @@
+{
+  "url": "https://www.tiktok.com/@erin.lim/video/7630886202299796749?_r=1&_t=ZS-9Atwz7e8KLk",
+  "author": "erin.lim",
+  "caption": "honey garlic chicken 🍗 best meal when i’m too lazy to cook  recipe link: https://erinscozykitchen.com/recipe/honey-garlic-chicken/ #honey #garlic #chicken #recipe ",
+  "expected": {
+    "has_recipe": false,
+    "links": [
+      "https://erinscozykitchen.com/recipe/honey-garlic-chicken/"
+    ]
+  }
+}
