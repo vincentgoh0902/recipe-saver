@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#1b1a18" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f7f0e1">
   <title>{% block title %}Recipes{% endblock %}</title>
   <link rel="stylesheet" href="/static/app.css">
   <script src="/static/htmx.min.js" defer></script>
 </head>
 <body>
   <header class="bar">
-    <a href="/" class="brand">Recipes</a>
+    {% block brand %}<a href="/" class="brand">Recipe saver</a>{% endblock %}
     <nav>
       <a href="/imports">Imports</a>
       <a href="/recipes/new" class="button small">New</a>
     </nav>
   </header>
+  {% block hero %}{% endblock %}
   <main>{% block content %}{% endblock %}</main>
 </body>
 </html>

@@ -1,16 +1,27 @@
 {% extends "base.html" %}
+{% block brand %}<span></span>{% endblock %}
+{% block hero %}
+<section class="hero">
+  <div class="hero-text">
+    <h1>Recipe saver</h1>
+    <p class="lede">Share a TikTok, get a recipe you can actually cook from.</p>
+  </div>
+  <img class="hero-art" src="/static/hero.webp" width="1000" height="1000"
+       alt="Illustration of a chef cooking in a small kitchen">
+  <form class="paste hero-form" method="post" action="/import"
+        hx-post="/import" hx-target="#jobs" hx-swap="outerHTML"
+        hx-on::after-request="if (event.detail.successful) this.reset()">
+    <label for="source" class="visually-hidden">TikTok link or recipe text</label>
+    <textarea id="source" name="source" rows="2" maxlength="20000"
+              placeholder="Paste a TikTok link or recipe text" required></textarea>
+    <button type="submit">Import</button>
+  </form>
+</section>
+{% endblock %}
 {% block content %}
-<form class="paste" method="post" action="/import"
-      hx-post="/import" hx-target="#jobs" hx-swap="outerHTML"
-      hx-on::after-request="if (event.detail.successful) this.reset()">
-  <label for="source" class="visually-hidden">TikTok link or recipe text</label>
-  <textarea id="source" name="source" rows="2" maxlength="20000"
-            placeholder="Paste a TikTok link or recipe text" required></textarea>
-  <button type="submit">Import</button>
-</form>
-
 {% include "_jobs.html" %}
 
+<h2>Your recipes</h2>
 <input type="search" name="q" value="{{ q }}" class="search" aria-label="Search recipes"
        placeholder="Search by name, ingredient or tag" autocomplete="off"
        hx-get="/" hx-trigger="input changed delay:250ms, search" hx-target="#results"
