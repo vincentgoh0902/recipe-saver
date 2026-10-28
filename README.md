@@ -15,11 +15,11 @@ parser can't. See `docs/PRD.md` for the full spec.
 
 <p align="center">
   <img src="docs/screenshots/recipe.png" width="600"
-       alt="Smash Burger recipe page: ingredients with quantities and numbered steps">
+       alt="Diner pancakes recipe page: ingredients with quantities and numbered steps">
 </p>
 
 The recipe above was imported from
-[a TikTok by @derekkchen](https://www.tiktok.com/@derekkchen/video/7376675072469208362).
+[a TikTok by @cameroncookedthis](https://www.tiktok.com/@cameroncookedthis/video/7431609541676043551).
 
 ## Run it
 
