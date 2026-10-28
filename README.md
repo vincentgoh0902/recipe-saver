@@ -9,6 +9,18 @@ then the voiceover (transcribed locally with whisper.cpp), and stops once it has
 ingredients and steps. A small local LLM handles captions and voiceovers the rule-based
 parser can't. See `docs/PRD.md` for the full spec.
 
+## Screenshots
+
+![Home page: the import card next to the kitchen illustration, with saved recipes below](docs/screenshots/home.png)
+
+<p align="center">
+  <img src="docs/screenshots/recipe.png" width="600"
+       alt="Smash Burger recipe page: ingredients with quantities and numbered steps">
+</p>
+
+The recipe above was imported from
+[a TikTok by @derekkchen](https://www.tiktok.com/@derekkchen/video/7376675072469208362).
+
 ## Run it
 
 Locally (Python 3.11+, [uv](https://docs.astral.sh/uv/)):
