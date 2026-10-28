@@ -1,0 +1,21 @@
+{
+  "transcript": "I made topokie from my wife and she said first I chopped green onion into finger length pieces. I added olive oil and cooked green onion until they softened. Next, I added water, sugar, kuchkaru, soy sauce, and kuchuzang. Once it boiled, I added the rice cakes and let them simmer over medium heat. I stirred them around occasionally so they wouldn't stick to the pan. When the sauce thickened, I added a pinch of curry powder and boiled eggs so that my wife doesn't forget her protein.",
+  "expected": {
+    "ingredients": [
+      "green onion",
+      "olive oil",
+      "water",
+      "sugar",
+      "soy sauce",
+      "rice cake",
+      "curry powder",
+      "egg"
+    ],
+    "actions": [
+      "chop",
+      "green onion",
+      "rice cake",
+      "curry powder"
+    ]
+  }
+}

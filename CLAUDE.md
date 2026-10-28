@@ -34,7 +34,15 @@ whisper.cpp, local LLM for parse fallback (JSON-constrained).
   don't trust their result (run-on unbulleted lists) or the title is weak.
   The LLM is any OpenAI-compatible server (`LLM_BASE_URL`, `LLM_MODEL`), so the server
   can run Ollama or llama.cpp's `llama-server`.
-- `tests/fixtures/captions/` the 10 sample captions with hand-written expected results.
+- `recipe_saver/fetch.py` yt-dlp caption/metadata and audio (to 16 kHz WAV via ffmpeg, temp
+  dir, deleted after). Audio comes from the smallest video format: TikTok's audio-only
+  format is the post's "sound" (often just background music), not the voiceover.
+  `transcribe.py` runs the whisper.cpp CLI (`WHISPER_BIN`, `WHISPER_MODEL`).
+- `recipe_saver/pipeline.py` one import: caption first; if it lacks ingredients or steps,
+  transcribe the voiceover and merge (caption ingredients + spoken steps, F7). Under 15
+  spoken words counts as no speech (music, silence). Website links (F6) not done yet.
+- `tests/fixtures/captions/` the 14 sample captions with hand-written expected results;
+  `tests/fixtures/transcripts/` the 13 sample voiceovers with expected ingredients and key actions.
 - `spike/` milestone throwaway scripts (`uv run spike/fetch.py URL`)
 - `data/` gitignored; `data/samples/` holds raw fetched captions.
 
@@ -42,4 +50,8 @@ whisper.cpp, local LLM for parse fallback (JSON-constrained).
 
 - `uv run pytest` (LLM tests skip when no LLM is reachable)
 - `uv run scripts/eval_parser.py [--no-llm] [-v]` scores the parser on the fixtures
+- `uv run scripts/eval_audio.py [-v]` scores voiceover parsing and caption+voiceover merging
+- `uv run spike/import_post.py URL` full import; `spike/transcribe.py URL` saves transcripts
+- Whisper: `brew install whisper-cpp ffmpeg`; model
+  `curl -L -o models/ggml-base.en.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin`
 - Local LLM: `brew install ollama && brew services start ollama && ollama pull qwen2.5:3b`

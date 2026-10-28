@@ -1,0 +1,26 @@
+{
+  "transcript": "If you're trying to lose fat and build muscle, save money and time by meal prepping these cheesy, honey chipotle chicken quesadillas with 65 grams of protein each that can be stored in the freezer for months and reheated in minutes. Start by grabbing your chicken breast, add store-bought or homemade chipotle seasoning with some olive oil, mix it well, then let it cook on medium heat with a lid on, and while that's cooking in a blender cup, add cottage cheese, more chipotle seasoning, light mayo, garlic cloves, lime juice, chipotle in a dobo sauce, hot sauce, some honey, and blend until smooth and creamy. Once we're bowl along with the chipotle sauce, light grated cheese, chives, and mix well, then grab a warm tortilla, add some light cheddar, equally distribute the filling with a bit more cheese, fold it over and pan fry with cooking spray until golden brown and crispy, repeat the process for the other 9 case ideas and that's it, enjoy.",
+  "expected": {
+    "ingredients": [
+      "chicken",
+      "chipotle seasoning",
+      "olive oil",
+      "cottage cheese",
+      "mayo",
+      "garlic",
+      "lime",
+      "hot sauce",
+      "honey",
+      "cheese",
+      "chives",
+      "tortilla",
+      "cheddar"
+    ],
+    "actions": [
+      "cook",
+      "blend",
+      "tortilla",
+      "fry"
+    ]
+  }
+}

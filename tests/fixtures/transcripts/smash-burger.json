@@ -1,0 +1,26 @@
+{
+  "transcript": "Welcome to 30 minute meals where I show you recipes that take less than 30 minutes to make. Today we're making smash burgers. It's been trending everywhere but you can easily make it at home and it'll taste just as good as those smash burger joints. Start by thinly slicing onions with a mandolin or a knife and rolling out ground beef into four ounce balls. Try using 75/25 beef but 80/20 works well too. The burger sauce is just a combination of mayo, ketchup, mustard, Worcestershire sauce, pickle juice, paprika, garlic and onion powder. Make sure to taste and adjust to your liking. Add the beef to a hot pan that's not non-stick and seasoned generously with salt and pepper. Add a small handful of the sliced onions on top of the burger and smash as hard as you can. Scrape and flip over after a couple of minutes and immediately add sliced American cheese and the top and bottom bun so it can steam. Now assemble your burger and that's it. Enjoy!",
+  "expected": {
+    "ingredients": [
+      "onion",
+      "beef",
+      "mayo",
+      "ketchup",
+      "mustard",
+      "worcestershire",
+      "pickle juice",
+      "paprika",
+      "salt",
+      "pepper",
+      "american cheese",
+      "bun"
+    ],
+    "actions": [
+      "slice",
+      "sauce",
+      "smash",
+      "flip",
+      "cheese"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "transcript": "This is the juiciest chicken for the lowest amount of effort and here's how you make it. I steamed four chicken thighs with the bone in skin on with ginger, spring onion and jjuby dates, about 20 minutes. Then you're going to take the chicken side and you're going to keep that chicken broth. That is key to this. We're going to make a sauce by mincing some ginger, spring onions, pouring over some hot oil and seasoning with chili flakes, sugar, some soy sauce, oyster sauce and then returning that golden chicken broth back into the sauce. Probably could have used that well, but I'm trying to be a little bit healthier. It didn't matter because look at this, return your shredded chicken back into the sauce. That is it. Serve it over some white rice and it's just that classic sort of high-neighs chicken rice taste without going to all the effort of high-neighs chicken. So good.",
+  "expected": {
+    "ingredients": [
+      "chicken",
+      "ginger",
+      "spring onion",
+      "chili flakes",
+      "sugar",
+      "soy sauce",
+      "oyster sauce",
+      "rice"
+    ],
+    "actions": [
+      "steam",
+      "sauce",
+      "rice"
+    ]
+  }
+}

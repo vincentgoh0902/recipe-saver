@@ -1,0 +1,24 @@
+{
+  "transcript": "We're making the easiest 20 minute dinner, honey garlic chicken. When I'm done working, my desire to cook is non-existent. But this is what I make when I'm too lazy to cook. First start by seasoning our skin on chicken thighs. I do salt, pepper, a ton of garlic powder, grated ginger, and oyster sauce. I like to use skin on chicken thighs because it helps make it super crispy. But to make it even crispy, we're gonna coat it in some corn starch. Hand-fry its skin side first, and then flip when it's crispy and golden brown and set that to the side. The sauce is only five ingredients. We're adding butter, a ton of garlic, soy sauce, honey, rice vinegar, and then you just let that simmer to let the sauce reduce. Add all of your chicken back, glaze it with that garlicky sauce. Don't forget to serve it with some hot rice and now in just 20 minutes you can eat and you don't have to order food.",
+  "expected": {
+    "ingredients": [
+      "chicken",
+      "salt",
+      "pepper",
+      "garlic powder",
+      "ginger",
+      "oyster sauce",
+      "starch",
+      "butter",
+      "soy sauce",
+      "honey",
+      "rice vinegar"
+    ],
+    "actions": [
+      "season",
+      "starch",
+      "fry",
+      "simmer"
+    ]
+  }
+}

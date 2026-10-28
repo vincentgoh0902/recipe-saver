@@ -33,6 +33,11 @@ GENERIC_HEADERS = {"ingredients", "ingredient", "recipe", "instructions", "metho
 SECTION_WORDS = {"sauce", "dressing", "marinade", "glaze", "topping", "toppings",
                  "filling", "garnish", "batter", "dough"}
 MAX_UNBULLETED_ITEM_WORDS = 3
+# What's left of "Find the full recipe on <url>" once the URL is gone.
+LINK_LEADIN_RE = re.compile(
+    r"\s*\b(?:(?:find|get|see|check out)\b.*?\brecipe|(?:full )?recipe (?:link|on|at|here|below))\b.*$",
+    re.IGNORECASE,
+)
 
 
 @dataclass
@@ -133,7 +138,7 @@ def _strip_subheadings(segments: list[str]) -> list[str]:
 
 def _title_from(prefix: str, headers: list[str]) -> str:
     for part in re.split(r"[.!?|:]", prefix):
-        part = part.strip(" -")
+        part = LINK_LEADIN_RE.sub("", part).strip(" -")
         if re.search(r"[A-Za-z]", part):
             return part[0].upper() + part[1:]
     for header in headers:

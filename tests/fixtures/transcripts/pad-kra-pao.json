@@ -1,0 +1,27 @@
+{
+  "transcript": "Welcome to Meal Prep Mondays. I'm making delicious and easy meal prep dishes that will last throughout the week so we both stay on track to a healthier 2026. Today we're making Pat Capao. Instead of making ground beef with rice, this is a super easy to make alternative that tastes way better. Plus it comes to about 650 calories with 66 grams of protein. Stop by tuning the end office in green beans and slicing them into small pieces. Now slice a bunch of Thai chilies and add that to a mortar and pestle with garlic. Smash that until it turns into a paste, then make the sauce by combining oyster sauce with lightened our soy sauce, fish sauce, and a little palm sugar. Get some Dazmin rice, give it a good rinse until the water runs clear, and get that cooking in a rice cooker. Heat up a wok with a little spray oil and saute the chili garlic paste until it smells nice and fragrant. Add in the lean ground beef and let that cook, breaking it up into small pieces. Once it's cooked through, toss in the green beans, saute for a few more minutes, then pour in the sauce. Once everything is nicely coated in the sauce, add in a handful of Thai basil and give it a mix. Set that aside while you fry up some eggs. Cover and let that steam so the set then portion everything out and enjoy.",
+  "expected": {
+    "ingredients": [
+      "green beans",
+      "chili",
+      "garlic",
+      "oyster sauce",
+      "soy sauce",
+      "fish sauce",
+      "palm sugar",
+      "rice",
+      "oil",
+      "beef",
+      "basil",
+      "egg"
+    ],
+    "actions": [
+      "green beans",
+      "paste",
+      "rice",
+      "beef",
+      "basil",
+      "egg"
+    ]
+  }
+}

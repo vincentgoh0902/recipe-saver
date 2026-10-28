@@ -49,3 +49,26 @@ def score(result: ParseResult, expected: dict) -> list[str]:
     if "servings" in expected and result.recipe.servings != expected["servings"]:
         problems.append(f"servings {result.recipe.servings!r}, expected {expected['servings']!r}")
     return problems
+
+
+TRANSCRIPTS_DIR = FIXTURES_DIR.parent / "transcripts"
+
+
+def load_transcripts() -> list[dict]:
+    return [json.loads(p.read_text()) | {"slug": p.stem} for p in sorted(TRANSCRIPTS_DIR.glob("*.json"))]
+
+
+def score_spoken(recipe, expected: dict) -> list[str]:
+    """Voiceover parse: every ingredient the speaker names, and steps that cover each key
+    action they describe (how the model splits them into steps doesn't matter)."""
+    if recipe is None:
+        return ["no recipe found"]
+    items = [ing.item.lower() for ing in recipe.ingredients]
+    problems = [f"missing: {want}" for want in expected["ingredients"]
+                if not any(want in item for item in items)]
+    return problems + score_steps(recipe, expected)
+
+
+def score_steps(recipe, expected: dict) -> list[str]:
+    steps = " ".join(recipe.steps).lower()
+    return [f"no step mentions: {action}" for action in expected["actions"] if action not in steps]

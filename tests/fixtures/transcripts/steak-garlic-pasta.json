@@ -1,0 +1,20 @@
+{
+  "transcript": "This has got to be one of the bath meals I've made in a hot minute. Creamy cheesy garlic pasta with a ribeye steak. Let me show you how to do it. Start by patting your steak dry and heavily season both sides with salt and black pasta. The only place I get my steaks from our Ayahalal. In quality of these steaks, I'm not even close to what you get in the supermarket. I love these ones. Let that come to room temperature while you make your pasta. So melt some butter in a pan and then add some finely diced onions with a bit of salt. Cook this on a medium heat. Add the garlic and cook that for about two to three minutes. Add the tomato puree and a bit of boiling water and cook this for about a minute. Add a pan. Add the pan to the pan to the highest setting. Add the avocado oil and let the pan and the oil lay the steak away from me. I cook them for two minutes on each side, applying pressure each time as well. Then I just base it in butter and garlic. Feel free to add rosemary and thyme, whatever you want. And then make sure you leave your steak to rest. I let mine rest for about five minutes and then I sliced it off. Did I not nail the medium rare guy? Then just put it on top of your pasta and it's done.",
+  "expected": {
+    "ingredients": [
+      "steak",
+      "salt",
+      "butter",
+      "onion",
+      "garlic",
+      "tomato",
+      "avocado oil"
+    ],
+    "actions": [
+      "season",
+      "onion",
+      "garlic",
+      "rest"
+    ]
+  }
+}

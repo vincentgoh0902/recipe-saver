@@ -1,0 +1,23 @@
+{
+  "transcript": "I'm gonna show you how to turn this cheap beef and a sweet potato into a super delicious meal that comes together in less than 20 minutes. And I'm gonna start off by cutting this into really tiny pieces. And don't forget to cut your beef across the grain. Or else you're never gonna finish chewing that damn bite. But your jaw is gonna be hella strong though. Pause. And the pieces should be like this small. And even though this is a super cheap cut of meat, I cut it super thin that I can even just pull it apart with my hands. So it should be really tender when I bite into it. And then we're gonna cook this sweet potato in the microwave. Rinse the sweet potato really well. Then just get a fork and just poke a bunch of holes in it. 'Cause you don't want this thing to explode. Trust me, I've made that mistake before. Wrap it with a damp paper towel so the moisture is locked in. And place it on the microwave safe bowl and microwave for a couple minutes. Then get a pan really hot. And now that the pan's hot enough, we're gonna add in some oil. Just a little bit 'cause we're on our health grind. Then add in the beef. And we're gonna hit it with some salt, some black pepper, some garlic powder of course. A little bit of MSG to make it taste really good. And I'm gonna add a splash of soy sauce just to give it a nice color and a lot of flavor. It's all done. Wow. All right, let's check on the sweet potato now. Let's take it out. Careful, it's very hot. Careful, it's very, very, very hot. All right, and the sweet potato is fully cooked now. Okay, how good that looks. And smash it down a little bit to create a nice and even surface. And we're gonna add on that really good beef just on top. Then drizzle on some hot honey 'cause hot honey makes everything taste way better. And my favorite sauce, sriracha. And finish it off with a little foodie cocky. And that's pretty much it. Feel free to add on whatever toppings you want. But this beef and sweet potato meal came together in less than 20 minutes. Let's give it a quick taste test. That is so good.",
+  "expected": {
+    "ingredients": [
+      "beef",
+      "sweet potato",
+      "oil",
+      "salt",
+      "black pepper",
+      "garlic powder",
+      "msg",
+      "soy sauce",
+      "hot honey",
+      "sriracha"
+    ],
+    "actions": [
+      "cut",
+      "microwave",
+      "beef",
+      "hot honey"
+    ]
+  }
+}

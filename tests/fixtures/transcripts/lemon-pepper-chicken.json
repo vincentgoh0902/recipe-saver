@@ -1,0 +1,23 @@
+{
+  "transcript": "30-minute meal after your 9 to 5. Today, let's make a crispy lemon pepper chicken bowl. Want something quick and delicious? Make this for your weekend dinner. Dice your juicy chicken thighs into 2-inch cubes. Marinate with salt, lap pepper, garlic powder, sesame oil. Give it a really good mix. Add a teaspoon of corn starch and coat each piece nicely. Add a hot pan with oil. Add your chicken thighs and sear on each side until you get a nice color. About a minute or two. Once you get outside, put on the lid and cook for about 3 minutes until chicken is cooked through. Add juice from a fresh lemon or a bottle. Add in all the face that came with seeds too. 1 to 10 out of 10. Then add your diced green onions and stir fry for the last 30 seconds. As always, serve over hot rice. Crack open an instant egg for extra protein and you're done.",
+  "expected": {
+    "ingredients": [
+      "chicken",
+      "salt",
+      "garlic powder",
+      "sesame oil",
+      "starch",
+      "lemon",
+      "green onion",
+      "rice",
+      "egg"
+    ],
+    "actions": [
+      "dice",
+      "marinate",
+      "sear",
+      "lemon",
+      "green onion"
+    ]
+  }
+}

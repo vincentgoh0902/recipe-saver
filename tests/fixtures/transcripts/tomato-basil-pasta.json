@@ -1,0 +1,21 @@
+{
+  "transcript": "I'm gonna damage your cook, trying to show you that cooking is really not that hard. And this is creamy tomato basil pasta. This sauce is so good, it literally takes five ingredients. And by the time your pasta is done, so is everything else. Oh, actually one of the best smells of all time. Just give this a nice chop, something like this. Start with a bunch of olive oil, add your garlic. Just let this become nice and fragrant, and then add your basil. Add your tomato paste, and mix that around. Touch of red pepper flakes, just a little bit. Heavy whipping cream. Whisk this all together really good. A little bit of butter. Add your pasta back in, a little pasta water. And that's dinner in 15 minutes, guys. And look at that.",
+  "expected": {
+    "ingredients": [
+      "olive oil",
+      "garlic",
+      "basil",
+      "tomato paste",
+      "red pepper flakes",
+      "cream",
+      "butter",
+      "pasta"
+    ],
+    "actions": [
+      "garlic",
+      "basil",
+      "tomato paste",
+      "cream"
+    ]
+  }
+}

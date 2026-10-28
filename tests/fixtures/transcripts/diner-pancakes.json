@@ -1,0 +1,17 @@
+{
+  "transcript": "Here's the secret to really fluffy diner style pancakes. You're gonna start with your pretty standard dry mix of flour, leavening, sugar, that kind of stuff. The secret's in the beaten egg whites. These add like a ton of fluffy texture, almost like a souffle. So you're gonna gently fold your beaten egg whites into the batter with the buttermilk and the eggs and the flour and the leavening and just kind of let that bubble away and let the rice start to take place in the bowl before you actually cook them. That way you get pancakes that I really like, which are these super thick fluffy ones. I do like my pancakes fried in butter. I think it's better that way. You get those like crispy bits, top these with copious amounts of butter and maple syrup, and you've got something reminiscent of the best diner style pancakes out there. Cheers.",
+  "expected": {
+    "ingredients": [
+      "flour",
+      "sugar",
+      "egg",
+      "buttermilk",
+      "butter",
+      "maple syrup"
+    ],
+    "actions": [
+      "fold",
+      "butter"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "transcript": "People have been going crazy over this ice cream cookie recently. So I'm here to try it out and let you know if it's worth making at home. For this, I went and I go to a recipe for a super chocolatey, gooey cookie, made with brown butter, sugar, eggs, vanilla, salt, flour, baking soda, and way more chocolate than the typical cookie has. Then I scooped out a chunk of dough and baked it off. The tricky bit now is to get the bake time right. You want the edges golden, but the center's still soft and gooey, which turns out to be exactly 8 minutes and 30 seconds for me. Then, while the cookie is still warm, I place it over a big scoop of good quality vanilla ice cream. And, oh my god, I had a feeling this was gonna be good, but I didn't expect it to be so dangerously addictive. Because I kid you not, I had three of these and was still craving for more. So drop everything, go make this now.",
+  "expected": {
+    "ingredients": [
+      "butter",
+      "sugar",
+      "egg",
+      "vanilla",
+      "salt",
+      "flour",
+      "baking soda",
+      "chocolate",
+      "ice cream"
+    ],
+    "actions": [
+      "scoop",
+      "bake",
+      "ice cream"
+    ]
+  }
+}

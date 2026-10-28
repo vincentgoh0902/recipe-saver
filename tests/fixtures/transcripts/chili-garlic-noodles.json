@@ -1,0 +1,22 @@
+{
+  "transcript": "Let me show you how to make these absolutely titillating 10-minute chili garlic noodles. Oh yeah, that'll get your wife done. Start by roughly chopping some garlic. Great some ginger. Dyson separates some green onions. And now for the rest of the sauce. Soy sauce, black vinegar, a little bit of sugar. Gochugaru. And if you don't have this, just use regular chili flakes. And sesame seeds. Now a good amount of food, lube, and a hot pan. And then in with our garlic ginger and onions. Once it starts to get nice and fragrant, ground pork. A little bit of salt. And once your pork is nicely brown, add in the rest of your sauce. And then after about a minute. Go ahead and add in your noodles.",
+  "expected": {
+    "ingredients": [
+      "garlic",
+      "ginger",
+      "green onion",
+      "soy sauce",
+      "black vinegar",
+      "sugar",
+      "sesame",
+      "pork",
+      "noodle"
+    ],
+    "actions": [
+      "garlic",
+      "sauce",
+      "pork",
+      "noodle"
+    ]
+  }
+}

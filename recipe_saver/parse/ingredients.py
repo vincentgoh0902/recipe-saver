@@ -72,6 +72,13 @@ def parse_ingredient_line(text: str, raw_text: str | None = None) -> Ingredient:
         rest = match["rest"]
 
     notes = [n.strip() for n in re.findall(r"\(([^)]*)\)", rest) if n.strip()]
+    # "Neutral Oil (¼ cup)": quantity after the item, in brackets.
+    if quantity is None and notes and (m := LINE_RE.match(notes[0])) and (q1 := to_number(m["q1"])) is not None:
+        quantity = q1
+        quantity_max = to_number(m["q2"]) if m["q2"] else None
+        unit = UNIT_ALIASES[m["unit"].lower()] if m["unit"] else None
+        notes[0] = m["rest"].strip()
+        notes = [n for n in notes if n]
     item = re.sub(r"\([^)]*\)", " ", rest)
     if "," in item:
         item, after = item.split(",", 1)
