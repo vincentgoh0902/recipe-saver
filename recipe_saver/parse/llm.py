@@ -109,10 +109,12 @@ class LLMError(Exception):
 
 
 class LLMClient:
-    def __init__(self, base_url: str | None = None, model: str | None = None, timeout: float = 120):
+    def __init__(self, base_url: str | None = None, model: str | None = None,
+                 timeout: float | None = None):
         self.base_url = (base_url or os.environ.get("LLM_BASE_URL", DEFAULT_BASE_URL)).rstrip("/")
         self.model = model or os.environ.get("LLM_MODEL", DEFAULT_MODEL)
-        self.timeout = timeout
+        # A CPU-only server is several times slower than the Mac; raise this there.
+        self.timeout = timeout or float(os.environ.get("LLM_TIMEOUT", 120))
 
     def available(self) -> bool:
         try:
@@ -163,6 +165,7 @@ class LLMClient:
         caption_lower = caption.lower()
         ingredients = []
         for ing in data.get("ingredients", []):
+            ing = _strip_keys(ing)
             item = (ing.get("item") or "").strip()
             if not item or not _mentioned(item, caption_lower):
                 continue
@@ -189,6 +192,7 @@ class LLMClient:
         text_lower = transcript.lower()
         ingredients = []
         for ing in data.get("ingredients", []) + extra.get("ingredients", []):
+            ing = _strip_keys(ing)
             item = (ing.get("item") or "").strip()
             if not item or not _mentioned(item, text_lower):
                 continue
@@ -212,15 +216,31 @@ class LLMClient:
             title=(data.get("title") or "").strip(),
             ingredients=_dedupe(ingredients),
             steps=[s.strip() for s in data.get("steps", []) if _said(s, text_lower)],
-            servings=data.get("servings"),
+            servings=_spoken_servings(data.get("servings"), text_lower),
             parse_method="llm",
         )
+
+
+def _strip_keys(ing: dict) -> dict:
+    """Small models sometimes write the next field's name into a value ("onion raw_text").
+    Underscored key names never occur in real text, so drop them."""
+    return {k: re.sub(r"\s*\b(?:raw_text|quantity_max)\b", "", v).strip() if isinstance(v, str) else v
+            for k, v in ing.items()}
 
 
 def _looping(text: str) -> bool:
     """A string the model got stuck repeating: some word appears 3 or more times."""
     words = re.findall(r"[a-z]{3,}", text.lower())
     return any(words.count(w) >= 3 for w in set(words))
+
+
+def _spoken_servings(servings: str | None, transcript_lower: str) -> str | None:
+    """The model guesses servings when none are said ("portion it out" -> "650 calories").
+    Keep them only if the speaker gives a count: "serves 4", "four portions"."""
+    count = r"(?:\d+|" + "|".join(w for w, v in NUMBER_WORDS.items() if v >= 1) + ")"
+    said = re.search(rf"\bserves\s+{count}\b|\b{count}\s+(?:servings?|portions?|people)\b",
+                     transcript_lower)
+    return servings if said and servings and re.search(r"\d", servings) else None
 
 
 def _said(step: str, transcript_lower: str) -> bool:
@@ -249,9 +269,11 @@ def _spoken_number(text: str) -> float | None:
 
 def _dedupe(ingredients: list[Ingredient]) -> list[Ingredient]:
     # Speakers repeat ingredients ("more chipotle seasoning"); keep the first mention.
+    # The two LLM calls name the same thing slightly differently ("chicken thigh" and
+    # "chicken thighs"), so compare without a trailing plural "s".
     seen, result = set(), []
     for ing in ingredients:
-        key = ing.item.lower()
+        key = re.sub(r"(?<=\w)s\b", "", ing.item.lower())
         if key not in seen:
             seen.add(key)
             result.append(ing)

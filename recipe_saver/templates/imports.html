@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Imports{% endblock %}
+{% block content %}
+<h1>Imports</h1>
+{% if not jobs %}<p class="empty">Nothing imported yet.</p>{% endif %}
+<ul class="import-list">
+  {% for job in jobs %}
+  <li class="job {{ job.status }}">
+    <div class="job-main">
+      <span class="status">{{ job.status }}</span>
+      {% if job.recipe_id %}<a href="/recipes/{{ job.recipe_id }}">{{ job.recipe_title or "Saved recipe" }}</a>{% endif %}
+      <span class="muted">{{ job.created_at[:16]|replace("T", " ") }} UTC</span>
+    </div>
+    <p class="source">{% if job.url %}<a href="{{ job.url }}" rel="noopener" target="_blank">{{ job.url }}</a>{% else %}Pasted text: {{ job.text[:80] }}…{% endif %}</p>
+    {% if job.error %}<p class="error">{{ job.error }}</p>{% endif %}
+    {% if job.notes %}<ul class="notes">{% for n in job.notes %}<li>{{ n }}</li>{% endfor %}</ul>{% endif %}
+    {% if job.status == "failed" %}
+    <form method="post" action="/jobs/{{ job.id }}/retry"><button class="small">Retry</button></form>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

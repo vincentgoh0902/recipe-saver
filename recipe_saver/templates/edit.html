@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Edit {{ recipe.title or "recipe" }}{% endblock %}
+{% block content %}
+<form class="edit" method="post" action="{{ '/recipes/%d' % stored.id if stored else '/recipes' }}">
+  <h1>{{ "Edit recipe" if stored else "New recipe" }}</h1>
+  <label>Title
+    <input name="title" value="{{ recipe.title }}" maxlength="200" required>
+  </label>
+  <div class="row">
+    <label>Serves
+      <input name="servings" value="{{ recipe.servings or '' }}" maxlength="50">
+    </label>
+    <label>Tags <span class="muted">(comma separated)</span>
+      <input name="tags" value="{{ tags|join(', ') }}" maxlength="500" placeholder="dinner, chicken">
+    </label>
+  </div>
+  <label>Ingredients <span class="muted">one per line, e.g. “200 g flour (sifted)”</span>
+    <textarea name="ingredients" rows="{{ [recipe.ingredients|length + 2, 6]|max }}">
+{%- for i in recipe.ingredients %}{{ i|ingredient_line }}
+{% endfor -%}
+</textarea>
+  </label>
+  <label>Steps <span class="muted">one per line</span>
+    <textarea name="steps" rows="{{ [recipe.steps|length * 2 + 2, 6]|max }}">
+{%- for s in recipe.steps %}{{ s }}
+{% endfor -%}
+</textarea>
+  </label>
+  <div class="actions">
+    <button type="submit">Save</button>
+    <a class="button quiet" href="{{ '/recipes/%d' % stored.id if stored else '/' }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

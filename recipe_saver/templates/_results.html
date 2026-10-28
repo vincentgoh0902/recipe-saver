@@ -1,0 +1,29 @@
+{# Refreshed when an import finishes (the /jobs poll sends the recipes-changed event). #}
+<div id="results" hx-get="/" hx-trigger="recipes-changed from:body" hx-include=".search"
+     hx-swap="outerHTML">
+  {% if recipes %}
+  <ul class="cards">
+    {% for s in recipes %}
+    <li>
+      <a href="/recipes/{{ s.id }}" class="card">
+        {% if s.thumbnail_path %}<img src="/thumbs/{{ s.thumbnail_path }}" alt="" loading="lazy">
+        {% else %}<div class="thumb-blank" aria-hidden="true"></div>{% endif %}
+        <div>
+          <strong>{{ s.recipe.title or "Untitled recipe" }}</strong>
+          <span class="muted">
+            {{ s.recipe.ingredients|length }} ingredients
+            {% if s.recipe.steps_missing %}· <span class="flag">no steps</span>{% endif %}
+            {% if s.source.author %}· @{{ s.source.author }}{% endif %}
+          </span>
+          {% if s.tags %}<span class="tags">{% for t in s.tags %}<span class="tag">{{ t }}</span>{% endfor %}</span>{% endif %}
+        </div>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% elif q %}
+  <p class="empty">No recipes match “{{ q }}”.</p>
+  {% else %}
+  <p class="empty">No recipes yet. Share a TikTok to the Shortcut, or paste a link above.</p>
+  {% endif %}
+</div>

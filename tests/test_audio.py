@@ -3,12 +3,12 @@ import pytest
 from recipe_saver.fetch import Post
 from recipe_saver.models import Ingredient, Recipe
 from recipe_saver.parse.evaluate import load_transcripts, score_spoken
-from recipe_saver.parse.llm import LLMClient, _said
+from recipe_saver.parse.llm import LLMClient, _said, _spoken_servings, _strip_keys
 from recipe_saver.pipeline import ImportResult, Importer
 from recipe_saver.transcribe import _tidy
 
 TRANSCRIPTS = {fx["slug"]: fx for fx in load_transcripts()}
-POST = Post(id="", url="", title=None, author=None, thumbnail=None, duration=None, caption="")
+POST = Post(id="", url="", platform="tiktok", title=None, author=None, thumbnail=None, duration=None, caption="")
 
 
 def test_tidy_drops_music_and_tags():
@@ -26,12 +26,27 @@ def test_no_speech_keeps_caption_result(transcript):
     assert "no speech in audio" in result.notes
 
 
+def test_strip_keys_removes_leaked_field_names():
+    ing = {"item": "onion raw_text", "raw_text": "an onion", "quantity": None}
+    assert _strip_keys(ing) == {"item": "onion", "raw_text": "an onion", "quantity": None}
+
+
 def test_said_drops_invented_numbers_and_filler():
     transcript = "bake it for 8 minutes and 30 seconds then roll four ounce balls".lower()
     assert _said("Bake for 8 minutes and 30 seconds.", transcript)
     assert _said("Roll the beef into 4 oz balls.", transcript)
     assert not _said("Preheat oven to 350°F (175°C).", transcript)
     assert not _said("Enjoy the cookie!", transcript)
+
+
+@pytest.mark.parametrize("guess, transcript, expected", [
+    ("650 calories", "then portion everything out. 650 calories with 66 grams of protein", None),
+    ("4", "this one serves 4 people", "4"),
+    ("2", "it makes two portions", "2"),
+    ("2", "four chicken thighs, about 20 minutes", None),
+])
+def test_servings_only_when_spoken(guess, transcript, expected):
+    assert _spoken_servings(guess, transcript) == expected
 
 
 @pytest.mark.llm

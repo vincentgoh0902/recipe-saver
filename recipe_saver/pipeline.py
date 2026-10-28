@@ -1,5 +1,5 @@
-"""One import, end to end: caption first, then the voiceover when the caption lacks
-ingredients or steps (F4, F5, F7). The job queue (milestone 4) wraps run()."""
+"""One import, end to end: caption first, then a linked recipe website, then the
+voiceover, until there are ingredients and steps (F4-F7). The worker wraps run()."""
 
 import tempfile
 from collections.abc import Callable
@@ -8,9 +8,10 @@ from pathlib import Path
 
 from recipe_saver.fetch import Post, download_audio, fetch_post
 from recipe_saver.models import Recipe
-from recipe_saver.parse import parse_caption
+from recipe_saver.parse import ParseResult, parse_caption
 from recipe_saver.parse.llm import LLMClient, LLMError
 from recipe_saver.transcribe import Transcriber, TranscribeError
+from recipe_saver.website import WebsiteError, fetch_recipe
 
 # Fewer words than this is music, silence or a whisper hallucination ("you").
 MIN_SPEECH_WORDS = 15
@@ -30,16 +31,27 @@ class Importer:
         self.llm = llm
         self.transcriber = transcriber or Transcriber()
 
-    def run(self, url: str, on_status: Callable[[str], None] = lambda status: None) -> ImportResult:
+    def run(self, url: str, on_status: Callable[[str], None] = lambda status: None,
+            post: Post | None = None) -> ImportResult:
+        """post: already fetched by the caller (the worker does, to spot re-shares)."""
         on_status("fetching")
-        post = fetch_post(url)
+        post = post or fetch_post(url)
         on_status("parsing")
         parsed = parse_caption(post.caption, self.llm)
         result = ImportResult(post, parsed.recipe, links=parsed.links, notes=parsed.notes)
-        if parsed.recipe and parsed.recipe.ingredients and parsed.recipe.steps:
+        if _complete(parsed.recipe):
             return result
 
-        # TODO(F6): try parsed.links (recipe websites) before the audio.
+        # A linked recipe page is the creator's full recipe, quantities included, so
+        # it replaces whatever the caption had.
+        for link in parsed.links:
+            try:
+                result.recipe = fetch_recipe(link)
+                result.notes.append(f"recipe from {link}")
+                return result
+            except WebsiteError as e:
+                result.notes.append(str(e))
+
         on_status("transcribing")
         try:
             with tempfile.TemporaryDirectory() as tmp:
@@ -48,6 +60,10 @@ class Importer:
             result.notes.append(f"audio skipped: {e}")
             return result
         return self.merge(result, transcript, on_status)
+
+    def run_text(self, text: str) -> ParseResult:
+        """Paste-text import (F13): the same caption parser, no fetching."""
+        return parse_caption(text, self.llm)
 
     def merge(self, result: ImportResult, transcript: str,
               on_status: Callable[[str], None] = lambda status: None) -> ImportResult:
@@ -87,3 +103,7 @@ class Importer:
             return self.llm.title(text) or ""
         except LLMError:
             return ""
+
+
+def _complete(recipe: Recipe | None) -> bool:
+    return bool(recipe and recipe.ingredients and recipe.steps)

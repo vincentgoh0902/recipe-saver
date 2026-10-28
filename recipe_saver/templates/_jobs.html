@@ -1,0 +1,23 @@
+{% set active = jobs|selectattr("active")|list %}
+<section id="jobs" class="jobs" {% if active %}hx-get="/jobs" hx-trigger="every 2s" hx-swap="outerHTML"{% endif %}>
+  {% for job in jobs %}
+  <div class="job {{ job.status }}">
+    <div class="job-main">
+      <span class="status">{{ job.status }}</span>
+      {% if job.status == "done" and job.recipe_id %}
+        <a href="/recipes/{{ job.recipe_id }}">{{ job.recipe_title or "Saved recipe" }}</a>
+        {% if "already saved" in job.notes %}<span class="muted">(already saved)</span>{% endif %}
+      {% else %}
+        <span class="source">{{ job.url or (job.text[:60] ~ "…") }}</span>
+      {% endif %}
+    </div>
+    {% if job.error %}<p class="error">{{ job.error }}</p>{% endif %}
+    {% if job.status == "failed" %}
+    <div class="job-actions">
+      <button class="small" hx-post="/jobs/{{ job.id }}/retry" hx-target="#jobs" hx-swap="outerHTML">Retry</button>
+      <button class="small quiet" hx-post="/jobs/{{ job.id }}/dismiss" hx-target="#jobs" hx-swap="outerHTML">Dismiss</button>
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</section>

@@ -1,0 +1,63 @@
+# recipe-saver
+
+Share a TikTok to an iPhone Shortcut and get a clean recipe card: ingredients with
+quantities, numbered steps, and a link back to the video. Self-hosted on a private
+Tailscale network; no paid APIs.
+
+The importer reads the caption first, then a recipe website linked from the caption,
+then the voiceover (transcribed locally with whisper.cpp), and stops once it has both
+ingredients and steps. A small local LLM handles captions and voiceovers the rule-based
+parser can't. See `docs/PRD.md` for the full spec.
+
+## Run it
+
+Locally (Python 3.11+, [uv](https://docs.astral.sh/uv/)):
+
+```sh
+brew install whisper-cpp ollama && brew services start ollama && ollama pull qwen2.5:3b
+mkdir -p models && curl -L -o models/ggml-base.en.bin \
+  https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin
+DATA_DIR=data/dev uv run python -m recipe_saver     # http://localhost:8000
+```
+
+With Docker (linux/arm64):
+
+```sh
+docker compose up --build    # uses Ollama on the host for the LLM
+```
+
+## Configuration
+
+| Variable | Default | |
+|---|---|---|
+| `PORT` | `8000` | HTTP port, listens on 0.0.0.0 |
+| `DATA_DIR` | `/data` | `recipes.db` and `thumbs/` |
+| `LLM_BASE_URL` | `http://localhost:11434/v1` | Any OpenAI-compatible server |
+| `LLM_MODEL` | `qwen2.5:3b` | |
+| `LLM_TIMEOUT` | `120` | Seconds per LLM request; ~300 on a CPU-only server |
+| `WHISPER_BIN` / `WHISPER_MODEL` | `whisper-cli` / `models/ggml-base.en.bin` | Set in the image |
+
+Memory: about 450 MB peak for the app (during transcription), plus the LLM server
+(~2.5 GB for `qwen2.5:3b`).
+
+## API
+
+`POST /api/import` queues an import and returns at once:
+
+```sh
+curl -X POST http://localhost:8000/api/import --json '{"url": "https://vt.tiktok.com/..."}'
+# {"job_id": 7, "status": "queued", "status_url": "/api/jobs/7"}
+```
+
+The body can also be a form field (`url` or `text`) or plain text, such as the share
+sheet's "Check out this video! https://..."; the link is picked out of it. Pasted recipe
+text works too. `GET /api/jobs/{id}` returns `status` (queued, fetching, transcribing,
+parsing, done, failed), `error` and `recipe_id`. `GET /health` returns 200.
+
+## Development
+
+```sh
+uv run pytest                      # LLM tests skip if no LLM is reachable
+uv run scripts/eval_parser.py      # caption parser on the sample captions
+uv run scripts/eval_audio.py       # voiceover parsing on the sample transcripts
+```

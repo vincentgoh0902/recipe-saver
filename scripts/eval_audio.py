@@ -18,7 +18,7 @@ from recipe_saver.parse.evaluate import load_fixtures, load_transcripts, score_s
 from recipe_saver.parse.llm import LLMClient
 from recipe_saver.pipeline import ImportResult, Importer
 
-POST = Post(id="", url="", title=None, author=None, thumbnail=None, duration=None, caption="")
+POST = Post(id="", url="", platform="tiktok", title=None, author=None, thumbnail=None, duration=None, caption="")
 
 
 def main() -> int:

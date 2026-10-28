@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ recipe.title or "Recipe" }}{% endblock %}
+{% block content %}
+<article class="recipe">
+  {% if stored.thumbnail_path %}<img class="hero" src="/thumbs/{{ stored.thumbnail_path }}" alt="">{% endif %}
+  <h1>{{ recipe.title or "Untitled recipe" }}</h1>
+  <p class="muted meta">
+    {% if recipe.servings %}<span>{% if recipe.servings.isdigit() %}Serves {% endif %}{{ recipe.servings }}</span>{% endif %}
+    {% if stored.source.url %}<a href="{{ stored.source.url }}" rel="noopener" target="_blank">
+      {% if stored.source.author %}@{{ stored.source.author }}{% else %}Original video{% endif %} ↗</a>{% endif %}
+    <span class="method">{{ recipe.parse_method }}</span>
+  </p>
+  {% if stored.tags %}<p class="tags">{% for t in stored.tags %}<a class="tag" href="/?q={{ t|urlencode }}">{{ t }}</a>{% endfor %}</p>{% endif %}
+
+  <h2>Ingredients</h2>
+  {% if recipe.ingredients %}
+  <ul class="ingredients">
+    {% for i in recipe.ingredients %}
+    <li>
+      {% if i.quantity is not none %}<span class="qty">{{ i.quantity|qty }}{% if i.quantity_max is not none %}–{{ i.quantity_max|qty }}{% endif %}{% if i.unit %} {{ i.unit }}{% endif %}</span>{% endif %}
+      {{ i.item }}{% if i.note %} <span class="muted">({{ i.note }})</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}<p class="muted">No ingredients.</p>{% endif %}
+
+  <h2>Steps</h2>
+  {% if recipe.steps %}
+  <ol class="steps">{% for step in recipe.steps %}<li>{{ step }}</li>{% endfor %}</ol>
+  {% else %}
+  <p class="flag-box">No steps were found in the caption, a linked page or the voiceover.
+    Watch the video and add them with Edit.</p>
+  {% endif %}
+
+  <div class="actions">
+    <a class="button" href="/recipes/{{ stored.id }}/edit">Edit</a>
+    <form method="post" action="/recipes/{{ stored.id }}/delete"
+          onsubmit="return confirm('Delete this recipe?')">
+      <button type="submit" class="quiet danger">Delete</button>
+    </form>
+  </div>
+
+  {% if stored.source.raw_caption or stored.source.transcript %}
+  <details class="raw">
+    <summary>Original text</summary>
+    {% if stored.source.raw_caption %}<h3>Caption</h3><p>{{ stored.source.raw_caption }}</p>{% endif %}
+    {% if stored.source.transcript %}<h3>Voiceover</h3><p>{{ stored.source.transcript }}</p>{% endif %}
+  </details>
+  {% endif %}
+</article>
+{% endblock %}
