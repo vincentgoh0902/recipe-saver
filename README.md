@@ -11,16 +11,15 @@ then the voiceover (transcribed locally with whisper.cpp), and stops once it has
 ingredients and steps. A small local LLM handles captions and voiceovers the rule-based
 parser can't. See `docs/PRD.md` for the full spec.
 
-## Screenshots
-
-![Home page: the import card next to the kitchen illustration, with saved recipes below](docs/screenshots/home.png)
+## Demo
 
 <p align="center">
-  <img src="docs/screenshots/recipe.png" width="600"
-       alt="Diner pancakes recipe page: ingredients with quantities and numbered steps">
+  <img src="docs/demo.gif" width="320"
+       alt="Sharing a TikTok to the save recipe Shortcut, then the imported pancake recipe with ingredients and steps">
 </p>
 
-The recipe above was imported from
+Share a TikTok, tap the Shortcut, and the recipe arrives about a minute later (the wait
+is cut from the recording). The recipe is from
 [a TikTok by @cameroncookedthis](https://www.tiktok.com/@cameroncookedthis/video/7431609541676043551).
 
 ## How it works
