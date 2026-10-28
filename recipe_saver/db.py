@@ -191,6 +191,15 @@ class Store:
         with self._conn() as db:
             return [self._stored(db, row) for row in db.execute(sql, [*params, limit])]
 
+    def library_stats(self, top_tags: int = 12) -> tuple[int, list[str]]:
+        """Recipe count and the most used tags, for the home page's header and filters."""
+        with self._conn() as db:
+            total = db.execute("SELECT count(*) FROM recipes").fetchone()[0]
+            tags = [row[0] for row in db.execute(
+                """SELECT t.value FROM recipes r, json_each(r.tags) t
+                   GROUP BY t.value ORDER BY count(*) DESC, t.value LIMIT ?""", (top_tags,))]
+        return total, tags
+
     @staticmethod
     def _write_ingredients(db, recipe_id: int, ingredients: list[Ingredient]) -> None:
         db.executemany(

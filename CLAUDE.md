@@ -53,6 +53,8 @@ whisper.cpp, local LLM for parse fallback (JSON-constrained).
 - `recipe_saver/db.py` SQLite store (recipes, ingredients, import_jobs). `worker.py` the
   single import thread; jobs left mid-run by a restart are requeued at startup.
 - `recipe_saver/web.py` FastAPI routes; `templates/` Jinja + HTMX (vendored in `static/`).
+  `static/app.js` is optional polish on the home page (link/text toggle, tag chips, import
+  feedback); everything works without it.
   The editor shows one ingredient per line (`format.py`) and parses edited lines back
   with the rule parser; untouched lines keep their stored ingredient.
 - `tests/fixtures/captions/` the 14 sample captions with hand-written expected results;

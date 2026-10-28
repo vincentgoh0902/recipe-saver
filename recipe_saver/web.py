@@ -118,9 +118,11 @@ def create_app(store: Store | None = None, importer: Importer | None = None,
     @app.get("/")
     def index(request: Request, q: str = ""):
         recipes = store.search(q[:200])
+        total, tags = store.library_stats()
         if is_htmx(request) and request.headers.get("HX-Target") == "results":
-            return render(request, "_results.html", recipes=recipes, q=q)
-        return render(request, "index.html", recipes=recipes, q=q, jobs=store.visible_jobs())
+            return render(request, "_results.html", recipes=recipes, q=q, total=total, partial=True)
+        return render(request, "index.html", recipes=recipes, q=q, total=total, tags=tags,
+                      jobs=store.visible_jobs())
 
     @app.post("/import")
     def import_form(request: Request, source: str = Form("")):

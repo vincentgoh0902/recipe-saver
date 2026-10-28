@@ -1,0 +1,27 @@
+<section class="panel import" aria-labelledby="import-title">
+  <div class="import-head">
+    <h2 id="import-title">Add a recipe</h2>
+    <fieldset class="segmented">
+      <legend class="visually-hidden">What are you pasting?</legend>
+      <label><input type="radio" name="import-mode" value="link" checked><span>TikTok link</span></label>
+      <label><input type="radio" name="import-mode" value="text"><span>Recipe text</span></label>
+    </fieldset>
+  </div>
+  <form id="import-form" method="post" action="/import"
+        hx-post="/import" hx-target="#jobs" hx-swap="outerHTML" hx-disabled-elt="#import-submit">
+    <label for="source" class="visually-hidden">TikTok link or recipe text</label>
+    <textarea id="source" name="source" rows="1" maxlength="20000" required
+              autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="url"
+              placeholder="Paste a TikTok link"
+              data-placeholder-link="Paste a TikTok link"
+              data-placeholder-text="Paste the recipe: a title, ingredients, then steps"></textarea>
+    <div class="form-foot">
+      <p id="import-msg" class="form-msg" role="status" aria-live="polite">Saved recipes appear below when they're ready.</p>
+      <button id="import-submit" type="submit">
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="when-idle">Import Recipe</span><span class="when-busy">Importing…</span>
+      </button>
+    </div>
+  </form>
+  {% include "_jobs.html" %}
+</section>

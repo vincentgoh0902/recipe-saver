@@ -1,0 +1,3 @@
+<span id="recipe-count" class="count"{% if partial %} hx-swap-oob="true"{% endif %}>
+  {%- if q %}{{ recipes|length }} of {{ total }}{% else %}{{ total }} {{ "recipe" if total == 1 else "recipes" }}{% endif -%}
+</span>

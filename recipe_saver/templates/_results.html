@@ -1,29 +1,41 @@
+{% from "_icons.html" import book %}
 {# Refreshed when an import finishes (the /jobs poll sends the recipes-changed event). #}
 <div id="results" hx-get="/" hx-trigger="recipes-changed from:body" hx-include=".search"
      hx-swap="outerHTML">
+  {% if partial %}{% include "_count.html" %}{% endif %}
   {% if recipes %}
-  <ul class="cards">
+  <ul class="recipe-grid">
     {% for s in recipes %}
     <li>
-      <a href="/recipes/{{ s.id }}" class="card">
-        {% if s.thumbnail_path %}<img src="/thumbs/{{ s.thumbnail_path }}" alt="" loading="lazy">
-        {% else %}<div class="thumb-blank" aria-hidden="true"></div>{% endif %}
-        <div>
-          <strong>{{ s.recipe.title or "Untitled recipe" }}</strong>
-          <span class="muted">
-            {{ s.recipe.ingredients|length }} ingredients
-            {% if s.recipe.steps_missing %}· <span class="flag">no steps</span>{% endif %}
-            {% if s.source.author %}· @{{ s.source.author }}{% endif %}
-          </span>
-          {% if s.tags %}<span class="tags">{% for t in s.tags %}<span class="tag">{{ t }}</span>{% endfor %}</span>{% endif %}
+      <a href="/recipes/{{ s.id }}" class="recipe-card">
+        <div class="card-media">
+          {% if s.thumbnail_path %}<img src="/thumbs/{{ s.thumbnail_path }}" alt="" loading="lazy">
+          {% else %}<span class="thumb-blank">{{ book(28) }}</span>{% endif %}
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">{{ s.recipe.title or "Untitled recipe" }}</h3>
+          {% set meta = [s.recipe.ingredients|length ~ " ingredients"] %}
+          {% if s.recipe.servings %}{% set _ = meta.append(("Serves " if s.recipe.servings.isdigit() else "") ~ s.recipe.servings) %}{% endif %}
+          {% if s.source.author %}{% set _ = meta.append("@" ~ s.source.author) %}{% endif %}
+          <p class="card-meta">{{ meta|join(" · ") }}</p>
+          {% if s.recipe.steps_missing %}<p class="flag">No steps yet</p>{% endif %}
+          {% if s.tags %}<p class="tags">{% for t in s.tags[:3] %}<span class="tag">{{ t }}</span>{% endfor %}</p>{% endif %}
         </div>
       </a>
     </li>
     {% endfor %}
   </ul>
   {% elif q %}
-  <p class="empty">No recipes match “{{ q }}”.</p>
+  <div class="empty-state compact">
+    <p>No recipes match “{{ q }}”.</p>
+    <button type="button" class="quiet small" data-tag="">Clear search</button>
+  </div>
   {% else %}
-  <p class="empty">No recipes yet. Share a TikTok to the Shortcut, or paste a link above.</p>
+  <div class="empty-state">
+    <span class="empty-icon">{{ book(26) }}</span>
+    <h3>Your cookbook starts here</h3>
+    <p>Save your first recipe using a TikTok link or recipe text above.</p>
+    <a href="#import-form" class="button quiet" data-focus-import>Add a recipe</a>
+  </div>
   {% endif %}
 </div>

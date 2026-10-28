@@ -1,22 +1,28 @@
+{% from "_icons.html" import book %}
+{% set path = request.url.path %}
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f0e1">
-  <title>{% block title %}Recipes{% endblock %}</title>
+  <meta name="theme-color" content="#f4efe4">
+  <title>{% block title %}Recipe Saver{% endblock %}</title>
   <link rel="stylesheet" href="/static/app.css">
   <script src="/static/htmx.min.js" defer></script>
+  <script src="/static/app.js" defer></script>
 </head>
 <body>
-  <header class="bar">
-    {% block brand %}<a href="/" class="brand">Recipe saver</a>{% endblock %}
-    <nav>
-      <a href="/imports">Imports</a>
-      <a href="/recipes/new" class="button small">New</a>
-    </nav>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="/" class="brand">{{ book(22) }}<span>Recipe Saver</span></a>
+      <nav aria-label="Main">
+        <a href="/" class="nav-link nav-home" {% if path == "/" %}aria-current="page"{% endif %}>My Recipes</a>
+        <a href="/imports" class="nav-link" {% if path == "/imports" %}aria-current="page"{% endif %}>Imports</a>
+        <a href="/recipes/new" class="button small" {% if path == "/recipes/new" %}aria-current="page"{% endif %}><span>+ Add<span class="hide-xs"> Recipe</span></span></a>
+      </nav>
+    </div>
   </header>
   {% block hero %}{% endblock %}
-  <main>{% block content %}{% endblock %}</main>
+  <main class="container {% block width %}narrow{% endblock %}">{% block content %}{% endblock %}</main>
 </body>
 </html>
