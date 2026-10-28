@@ -4,12 +4,7 @@
   <div class="job {{ job.status }}">
     <div class="job-main">
       <span class="status">{{ job.status }}</span>
-      {% if job.status == "done" and job.recipe_id %}
-        <a href="/recipes/{{ job.recipe_id }}">{{ job.recipe_title or "Saved recipe" }}</a>
-        {% if "already saved" in job.notes %}<span class="muted">(already saved)</span>{% endif %}
-      {% else %}
-        <span class="source">{{ job.url or (job.text[:60] ~ "…") }}</span>
-      {% endif %}
+      <span class="source">{{ job.url or (job.text[:60] ~ "…") }}</span>
     </div>
     {% if job.error %}<p class="error">{{ job.error }}</p>{% endif %}
     {% if job.status == "failed" %}

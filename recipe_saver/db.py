@@ -7,7 +7,7 @@ import json
 import sqlite3
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 
 from recipe_saver.models import Ingredient, Recipe
@@ -285,11 +285,10 @@ class Store:
     def list_jobs(self, limit: int = 100) -> list[Job]:
         return self._jobs("ORDER BY j.id DESC LIMIT ?", (limit,))
 
-    def visible_jobs(self, recent_minutes: int = 15) -> list[Job]:
-        """For the home page: anything running, failures nobody has dismissed, and
-        imports that finished in the last few minutes (with a link to the recipe)."""
-        since = (datetime.now(timezone.utc) - timedelta(minutes=recent_minutes)).isoformat(timespec="seconds")
-        return self._jobs("WHERE j.status != 'done' OR j.finished_at >= ? ORDER BY j.id DESC", (since,))
+    def visible_jobs(self) -> list[Job]:
+        """For the home page: anything running and failures nobody has dismissed. Finished
+        imports drop off; the recipe shows up in the list instead."""
+        return self._jobs("WHERE j.status != 'done' ORDER BY j.id DESC", ())
 
     def _jobs(self, tail: str, params: tuple) -> list[Job]:
         sql = f"""SELECT j.*, r.title AS recipe_title FROM import_jobs j
