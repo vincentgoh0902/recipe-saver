@@ -1,7 +1,7 @@
 """Milestone 3 spike: fetch a post's audio, transcribe it, save the transcript.
 
     uv run spike/transcribe.py URL [URL ...]
-    uv run spike/transcribe.py --file links.txt
+    uv run spike/transcribe.py --file spike/links.txt
 
 Transcripts go to data/samples/<id>.transcript.txt next to the caption samples.
 """

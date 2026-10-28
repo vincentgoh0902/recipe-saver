@@ -7,7 +7,7 @@ import json
 import sqlite3
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from recipe_saver.models import Ingredient, Recipe
@@ -63,7 +63,7 @@ ACTIVE = ("queued", "fetching", "transcribing", "parsing")
 
 
 def now() -> str:
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return datetime.now(UTC).isoformat(timespec="seconds")
 
 
 @dataclass

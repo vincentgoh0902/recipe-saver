@@ -4,7 +4,7 @@ from recipe_saver.fetch import Post
 from recipe_saver.models import Ingredient, Recipe
 from recipe_saver.parse.evaluate import load_transcripts, score_spoken
 from recipe_saver.parse.llm import LLMClient, _said, _spoken_servings, _strip_keys
-from recipe_saver.pipeline import ImportResult, Importer
+from recipe_saver.pipeline import Importer, ImportResult
 from recipe_saver.transcribe import _tidy
 
 TRANSCRIPTS = {fx["slug"]: fx for fx in load_transcripts()}

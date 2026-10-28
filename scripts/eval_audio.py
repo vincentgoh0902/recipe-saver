@@ -14,9 +14,14 @@ import time
 
 from recipe_saver.fetch import Post
 from recipe_saver.parse import parse_caption
-from recipe_saver.parse.evaluate import load_fixtures, load_transcripts, score_spoken, score_steps
+from recipe_saver.parse.evaluate import (
+    load_fixtures,
+    load_transcripts,
+    score_spoken,
+    score_steps,
+)
 from recipe_saver.parse.llm import LLMClient
-from recipe_saver.pipeline import ImportResult, Importer
+from recipe_saver.pipeline import Importer, ImportResult
 
 POST = Post(id="", url="", platform="tiktok", title=None, author=None, thumbnail=None, duration=None, caption="")
 

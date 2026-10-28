@@ -10,7 +10,11 @@ import re
 from dataclasses import dataclass, field
 
 from recipe_saver.models import Ingredient, Recipe
-from recipe_saver.parse.ingredients import NUMBER, UNIT, parse_ingredient_line, to_number
+from recipe_saver.parse.ingredients import (
+    NUMBER,
+    parse_ingredient_line,
+    to_number,
+)
 from recipe_saver.parse.text import clean, hashtags
 
 ING_MARKER_RE = re.compile(r"\[ingredients?\]|\bingredients?\b\s*:?", re.IGNORECASE)

@@ -1,7 +1,7 @@
 """Milestone 3 check: run the full import (caption, then voiceover) and print the recipe.
 
     uv run spike/import_post.py URL [URL ...]
-    uv run spike/import_post.py --file links.txt
+    uv run spike/import_post.py --file spike/links.txt
 """
 
 import argparse

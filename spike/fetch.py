@@ -6,7 +6,7 @@
 
 Usage:
     uv run spike/fetch.py URL [URL ...]
-    uv run spike/fetch.py --file links.txt
+    uv run spike/fetch.py --file spike/links.txt
 
 Each result is also saved to data/samples/<id>.json so the parser
 milestone has real captions to test against.

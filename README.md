@@ -1,5 +1,7 @@
 # recipe-saver
 
+[![tests](https://github.com/vincentgoh0902/recipe-saver/actions/workflows/tests.yml/badge.svg)](https://github.com/vincentgoh0902/recipe-saver/actions/workflows/tests.yml)
+
 Share a TikTok to an iPhone Shortcut and get a clean recipe card: ingredients with
 quantities, numbered steps, and a link back to the video. Self-hosted on a private
 Tailscale network; no paid APIs.
@@ -20,6 +22,31 @@ parser can't. See `docs/PRD.md` for the full spec.
 
 The recipe above was imported from
 [a TikTok by @cameroncookedthis](https://www.tiktok.com/@cameroncookedthis/video/7431609541676043551).
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[iPhone share sheet] -->|Shortcut POSTs URL| B[/api/import/]
+    B --> Q[(import_jobs<br>SQLite)]
+    Q --> W[worker thread]
+    W --> C[caption<br>yt-dlp]
+    C -->|link in caption| S[recipe website<br>schema.org]
+    C -->|no steps yet| V[voiceover<br>whisper.cpp]
+    C & V --> P[rule parser<br>LLM fallback]
+    P --> R[(recipes)]
+    S --> R
+```
+
+- **Cheapest source first.** Captions are parsed by a rule-based parser in milliseconds;
+  the LLM (a 3B model, JSON-schema constrained) only runs when the rules don't trust their
+  result. On the 14 sample captions: 12/14 correct with rules alone, 14/14 with the fallback.
+- **No paid APIs, no GPU.** Speech-to-text is whisper.cpp `base.en` on CPU; the LLM is any
+  OpenAI-compatible server (Ollama, llama.cpp). The app peaks around 450 MB.
+- **No extra infrastructure.** The job queue is a SQLite table plus one worker thread;
+  jobs interrupted by a restart are requeued at startup.
+- **Evaluated, not eyeballed.** `tests/fixtures/` holds 14 captions and 13 voiceover
+  transcripts with hand-written expected results, scored by `scripts/eval_*.py`.
 
 ## Run it
 

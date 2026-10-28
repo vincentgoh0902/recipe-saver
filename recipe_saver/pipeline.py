@@ -10,7 +10,7 @@ from recipe_saver.fetch import Post, download_audio, fetch_post
 from recipe_saver.models import Recipe
 from recipe_saver.parse import ParseResult, parse_caption
 from recipe_saver.parse.llm import LLMClient, LLMError
-from recipe_saver.transcribe import Transcriber, TranscribeError
+from recipe_saver.transcribe import TranscribeError, Transcriber
 from recipe_saver.website import WebsiteError, fetch_recipe
 
 # Fewer words than this is music, silence or a whisper hallucination ("you").
