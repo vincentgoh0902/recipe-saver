@@ -1,6 +1,7 @@
 # recipe-saver
 
 [![tests](https://github.com/vincentgoh0902/recipe-saver/actions/workflows/tests.yml/badge.svg)](https://github.com/vincentgoh0902/recipe-saver/actions/workflows/tests.yml)
+https://github.com/user-attachments/assets/8b052ad6-0c3f-43f9-9868-d180481ba96b
 
 Share a TikTok to an iPhone Shortcut and get a clean recipe card: ingredients with
 quantities, numbered steps, and a link back to the video. Self-hosted on a private
