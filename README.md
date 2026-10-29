@@ -2,6 +2,9 @@
 
 [![tests](https://github.com/vincentgoh0902/recipe-saver/actions/workflows/tests.yml/badge.svg)](https://github.com/vincentgoh0902/recipe-saver/actions/workflows/tests.yml)
 
+**FastAPI + HTMX, yt-dlp, whisper.cpp and a local 3B LLM on SQLite. Runs on a 4-core
+ARM server with no GPU.**
+
 Share a TikTok to an iPhone Shortcut and get a clean recipe card: ingredients with
 quantities, numbered steps, and a link back to the video. Self-hosted on a private
 Tailscale network; no paid APIs.
@@ -41,7 +44,15 @@ flowchart LR
   the LLM (a 3B model, JSON-schema constrained) only runs when the rules don't trust their
   result. On the 14 sample captions: 12/14 correct with rules alone, 14/14 with the fallback.
 - **No paid APIs, no GPU.** Speech-to-text is whisper.cpp `base.en` on CPU; the LLM is any
-  OpenAI-compatible server (Ollama, llama.cpp). The app peaks around 450 MB.
+  OpenAI-compatible server (Ollama, llama.cpp). Measured in Docker, the app idles at
+  about 95 MB and peaks around 450 MB while transcribing.
+- **The voiceover, not the "sound".** TikTok's audio-only format is the post's sound,
+  often just background music. The importer takes the smallest video format instead and
+  decodes its audio with PyAV (no ffmpeg binary). Under 15 spoken words counts as no speech.
+- **Bounded LLM output.** A 3B model sometimes loops, so responses are capped with
+  `max_tokens` and JSON-schema `maxLength`/`maxItems`.
+- **Built for the server it runs on.** whisper.cpp is compiled for the server's Neoverse N1
+  cores (armv8.2-a with dotprod and fp16), not for the Mac that builds the image.
 - **No extra infrastructure.** The job queue is a SQLite table plus one worker thread;
   jobs interrupted by a restart are requeued at startup.
 - **Evaluated, not eyeballed.** `tests/fixtures/` holds 14 captions and 13 voiceover
